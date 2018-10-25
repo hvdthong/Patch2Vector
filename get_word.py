@@ -72,5 +72,6 @@ if __name__ == '__main__':
 
     path_commit = './data/newres_funcalls_jul28.out'
     commits_ = word_commit(path=path_commit, dictionary=dict_)
+    print(len(commits_))
     # for c in commits_:
     #     print(c)
