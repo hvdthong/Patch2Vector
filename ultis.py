@@ -76,7 +76,7 @@ def extract_commit(path_file):
     commits = load_file(path_file=path_file)
     indexes = commits_index(commits=commits)
     dicts = list()
-    for i in xrange(0, len(indexes)):
+    for i in range(0, len(indexes)):
         dict = {}
         if i == len(indexes) - 1:
             id, stable, date, msg, code = commit_info(commits[indexes[i]:])
@@ -179,11 +179,12 @@ def mini_batches(X_msg, X_added_code, X_removed_code, Y, mini_batch_size=64, see
 
 
 if __name__ == "__main__":
-    path_data = "./data/data_small.text"
+    # path_data = "./data/data_small.text"
     path_data = "./data/newres_funcalls_jul28.out"
     commits_ = extract_commit(path_file=path_data)
-    nfile, nhunk, nloc, nleng = 1, 8, 10, 120
-    new_commits = reformat_commit_code(commits=commits_, num_file=nfile, num_hunk=nhunk, num_loc=nloc, num_leng=nleng)
+    print(len(commits_))
+    # nfile, nhunk, nloc, nleng = 1, 8, 10, 120
+    # new_commits = reformat_commit_code(commits=commits_, num_file=nfile, num_hunk=nhunk, num_loc=nloc, num_leng=nleng)
 
     # total_ids = filtering_commit_union(commits=new_commits, num_file=nfile, num_hunk=nhunk, num_loc=nloc, size_line=nleng)
     # print len(total_ids)
