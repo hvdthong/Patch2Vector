@@ -1,4 +1,4 @@
-from ultis import load_file, commits_index
+from ultis import load_file, commits_index, write_file
 
 
 def load_dict(data):
@@ -70,6 +70,6 @@ if __name__ == '__main__':
 
     path_commit = './data/newres_funcalls_jul28.out'
     commits_ = word_commit(path=path_commit, dictionary=dict_)
-    for c in commits_:
-        print(c)
-    print(len(commits_))
+
+    path_write = './data/newres_funccalls_words_jul28.out'
+    write_file(path_file=path_write, data=commits_)
