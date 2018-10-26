@@ -61,8 +61,6 @@ def word_commit(path, dictionary):
         else:
             commit = mapping_word_commit(dictionary=dictionary, commit=commits[indexes[i]:indexes[i + 1]])
         new_commits += commit
-        for c in commit:
-            print(c)
     return new_commits
 
 
@@ -72,6 +70,6 @@ if __name__ == '__main__':
 
     path_commit = './data/newres_funcalls_jul28.out'
     commits_ = word_commit(path=path_commit, dictionary=dict_)
+    for c in commits_:
+        print(c)
     print(len(commits_))
-    # for c in commits_:
-    #     print(c)
