@@ -71,5 +71,5 @@ if __name__ == '__main__':
     path_commit = './data/newres_funcalls_jul28.out'
     commits_ = word_commit(path=path_commit, dictionary=dict_)
 
-    path_write = './data/newres_funccalls_words_jul28.out'
+    path_write = './data/newres_funcalls_words_jul28.out'
     write_file(path_file=path_write, data=commits_)
