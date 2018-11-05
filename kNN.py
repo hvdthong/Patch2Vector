@@ -37,8 +37,7 @@ def fold_data(message, code, fold):
     diff_train, diff_test = code[idx_train], code[idx_test]
     ref_train, ref_test = get_data_index(data=message, indexes=idx_train), get_data_index(data=message,
                                                                                           indexes=idx_test)
-    diff_data = (diff_train, diff_test)
-    ref_data = (ref_train, ref_test)
+    diff_data, ref_data = (diff_train, diff_test), (ref_train, ref_test)
     return diff_data, ref_data
 
 
