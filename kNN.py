@@ -12,6 +12,14 @@ def del_info(data, indexes):
     return data
 
 
+def reformat_data(data):
+    msgs = extract_msg(commits=data)
+    codes = extract_code(commits=data)
+    indexes = empty_info(message=msgs, code=codes)
+    msgs = del_info(data=)
+
+
+
 if __name__ == '__main__':
     path_file = './data/newres_funcalls_words_jul28.out'
     commits = extract_commit(path_file=path_file)
@@ -20,6 +28,8 @@ if __name__ == '__main__':
 
     msgs = extract_msg(commits=commits)
     codes = extract_code(commits=commits)
+    indexes_ = empty_info(message=msgs, code=codes)
+
     print(len(empty_info(message=msgs, code=codes)))
     print(empty_info(message=msgs, code=codes))
     print(len(msgs), len(codes))
