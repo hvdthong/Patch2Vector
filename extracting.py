@@ -14,7 +14,8 @@ def commit_date(commit):
 
 
 def commit_msg(commit):
-    commit_msg = commit[9].strip()
+    # commit_msg = commit[9].strip()  # extracting the simplified commit message
+    commit_msg = commit[6].strip()  # extracting the original commit message
     return commit_msg
 
 
