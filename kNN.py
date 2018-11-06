@@ -65,7 +65,9 @@ def kNN_model(tf_diff_code):
 
 
 def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
-    print('hello')
+    tf_diff_train, tf_diff_test = tf_diff_code
+    for i in range(tf_diff_test.shape[0]):
+        exit()
 
 
 if __name__ == '__main__':
@@ -78,5 +80,15 @@ if __name__ == '__main__':
     org_diff_data, tf_diff_data, ref_data = fold_data(message=msgs, org_code=codes, tf_code=make_features(data=codes),
                                                       fold=nfold)
     k_nearest_neighbor = 5
-    kNN_model(tf_diff_code=tf_diff_data)
+
+    # calculating the cosine similarity between each element in testing data to training data
+    # ---------------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------------------
+    # kNN_model(tf_diff_code=tf_diff_data)
+    # ---------------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------------------
+
+
+
+
 
