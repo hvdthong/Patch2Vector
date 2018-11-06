@@ -118,7 +118,7 @@ if __name__ == '__main__':
     # calculating the cosine similarity between each element in testing data to training data
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    # kNN_model(tf_diff_code=tf_diff_data)
+    kNN_model(tf_diff_code=tf_diff_data)
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
 
@@ -127,4 +127,4 @@ if __name__ == '__main__':
     # training data and test data based on the reference messages
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
+    # load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
