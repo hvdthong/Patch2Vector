@@ -2,6 +2,8 @@ from ultis import extract_commit, reformat_commit_code
 from extracting import extract_msg, extract_code
 from sklearn.model_selection import KFold
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 
 def empty_info(message, code):
@@ -32,19 +34,48 @@ def get_data_index(data, indexes):
     return [data[i] for i in indexes]
 
 
-def fold_data(message, code, fold):
+def fold_data(message, org_code, tf_code, fold):
     idx_train, idx_test = run_kfold(data=message, fold=fold)
-    diff_train, diff_test = code[idx_train], code[idx_test]
+    diff_train, diff_test = tf_code[idx_train], tf_code[idx_test]
     ref_train, ref_test = get_data_index(data=message, indexes=idx_train), get_data_index(data=message,
                                                                                           indexes=idx_test)
+    org_diff_train, org_diff_test = get_data_index(data=org_code, indexes=idx_train), get_data_index(data=org_code,
+                                                                                                     indexes=idx_test)
     diff_data, ref_data = (diff_train, diff_test), (ref_train, ref_test)
-    return diff_data, ref_data
+    org_diff_data = (org_diff_train, org_diff_test)
+    return org_diff_data, diff_data, ref_data
 
 
 def make_features(data):
     vectorizer = CountVectorizer()
     data = vectorizer.fit_transform(data)
     return data
+
+
+def cosine_similarity_score(train_data, element, topk):
+    for i in range(0, train_data.shape[0]):
+        train_ = np.ravel(train_data[i, :].todense())
+        # train_ = np.reshape(train_, (-1,))
+        # print(train_.shape)
+        print(np.ravel(train_).shape)
+        print(element.shape, type(element))
+        print(np.ravel(element.todense()).shape)
+        score = cosine_similarity(X=np.ravel(train_data[i, :].todense()), Y=np.ravel(element.todense()))
+        print(score)
+        exit()
+        element = element
+        score = cosine_similarity(X=np.ravel(train_data[i, :].todense()), Y=np.ravel(element.todense()))
+        exit()
+
+
+def kNN_model(org_diff_code, tf_diff_code, ref_msg, k_neighbor):
+    org_diff_train, org_diff_test = org_diff_code
+    tf_diff_train, tf_diff_test = tf_diff_code
+    ref_train, ref_test = ref_msg
+    print(tf_diff_train.shape, tf_diff_test.shape)
+    exit()
+    [cosine_similarity_score(train_data=tf_diff_train, element=tf_diff_test[i, :], topk=k_neighbor) for i in
+     range(0, tf_diff_test.shape[0])]
 
 
 if __name__ == '__main__':
@@ -54,4 +85,7 @@ if __name__ == '__main__':
                                    num_loc=10, num_leng=120)
     msgs, codes = reformat_data(data=commits)
     nfold = 5  # number of cross-validation
-    fold_data(message=msgs, code=make_features(data=codes), fold=nfold)
+    org_diff_data, tf_diff_data, ref_data = fold_data(message=msgs, org_code=codes, tf_code=make_features(data=codes),
+                                                      fold=nfold)
+    k_nearest_neighbor = 5
+    kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, k_neighbor=k_nearest_neighbor)
