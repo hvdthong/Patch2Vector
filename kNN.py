@@ -52,30 +52,20 @@ def make_features(data):
     return data
 
 
-def cosine_similarity_score(train_data, element, topk):
-    for i in range(0, train_data.shape[0]):
-        train_ = np.ravel(train_data[i, :].todense())
-        # train_ = np.reshape(train_, (-1,))
-        # print(train_.shape)
-        print(np.ravel(train_).shape)
-        print(element.shape, type(element))
-        print(np.ravel(element.todense()).shape)
-        score = cosine_similarity(X=np.ravel(train_data[i, :].todense()), Y=np.ravel(element.todense()))
-        print(score)
-        exit()
-        element = element
-        score = cosine_similarity(X=np.ravel(train_data[i, :].todense()), Y=np.ravel(element.todense()))
-        exit()
+def cosine_similarity_score(train_data, element, index):
+    sim_score = cosine_similarity(X=train_data.todense(), Y=element.todense())
+    np.savetxt('./tf_cosine_similarity/test_' + str(index) + '.txt', sim_score)
+    print(index)
 
 
-def kNN_model(org_diff_code, tf_diff_code, ref_msg, k_neighbor):
-    org_diff_train, org_diff_test = org_diff_code
+def kNN_model(tf_diff_code):
     tf_diff_train, tf_diff_test = tf_diff_code
-    ref_train, ref_test = ref_msg
-    print(tf_diff_train.shape, tf_diff_test.shape)
-    exit()
-    [cosine_similarity_score(train_data=tf_diff_train, element=tf_diff_test[i, :], topk=k_neighbor) for i in
+    [cosine_similarity_score(train_data=tf_diff_train, element=tf_diff_test[i, :], index=i) for i in
      range(0, tf_diff_test.shape[0])]
+
+
+def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
+    print('hello')
 
 
 if __name__ == '__main__':
@@ -88,4 +78,5 @@ if __name__ == '__main__':
     org_diff_data, tf_diff_data, ref_data = fold_data(message=msgs, org_code=codes, tf_code=make_features(data=codes),
                                                       fold=nfold)
     k_nearest_neighbor = 5
-    kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, k_neighbor=k_nearest_neighbor)
+    kNN_model(tf_diff_code=tf_diff_data)
+
