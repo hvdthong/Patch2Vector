@@ -102,8 +102,7 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
         blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
                                    smoothing_function=chencherry.method1)
         print(i, blue_score)
-        blue_scores.append(blue_score)
-        break
+        blue_scores.append(blue_score)   
     return blue_scores
 
 
