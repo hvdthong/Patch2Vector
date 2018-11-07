@@ -15,3 +15,8 @@ def train_model(commits, params):
     print('Dictionary of commit message has size: %i' % (len(dict_msg)))
     print('Dictionary of commit code has size: %i' % (len(dict_code)))
     # print pad_msg.shape, pad_added_code.shape, pad_removed_code.shape, labels.shape
+
+    print(pad_msg.shape)
+    print(pad_added_code.shape)
+    print(pad_removed_code.shape)
+    print(labels.shape)

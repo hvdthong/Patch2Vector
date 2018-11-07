@@ -86,3 +86,16 @@ def extract_code(commits):
             line += added_line + removed_line
         codes.append(" ".join(line))
     return codes
+
+
+def dictionary(data):
+    # create dictionary for commit message
+    lists = list()
+    for m in data:
+        lists += m.split()
+    lists = list(set(lists))
+    lists.append("NULL")
+    new_dict = dict()
+    for i in xrange(len(lists)):
+        new_dict[lists[i]] = i
+    return new_dict
