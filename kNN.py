@@ -103,7 +103,6 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
         print(i, blue_score)
 
 
-
 if __name__ == '__main__':
     path_file = './data/newres_funcalls_words_jul28.out'
     commits = extract_commit(path_file=path_file)
@@ -118,7 +117,7 @@ if __name__ == '__main__':
     # calculating the cosine similarity between each element in testing data to training data
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    kNN_model(tf_diff_code=tf_diff_data)
+    # kNN_model(tf_diff_code=tf_diff_data)
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
 
@@ -127,4 +126,4 @@ if __name__ == '__main__':
     # training data and test data based on the reference messages
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    # load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
+    load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
