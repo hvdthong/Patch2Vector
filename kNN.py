@@ -1,4 +1,4 @@
-from ultis import extract_commit, reformat_commit_code
+from ultis import extract_commit, reformat_commit_code, write_file
 from extracting import extract_msg, extract_code
 from sklearn.model_selection import KFold
 from sklearn.feature_extraction.text import CountVectorizer
@@ -92,6 +92,7 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
     org_diff_train, org_diff_test = org_diff_code
     tf_diff_train, tf_diff_test = tf_diff_code
     ref_train, ref_test = ref_msg
+    blue_scores = list()
     for i in range(tf_diff_test.shape[0]):
         cosine_sim = np.loadtxt('./tf_cosine_similarity/test_' + str(i) + '.txt')
         topK_index = finding_topK(cosine_sim=cosine_sim, topK=topK)
@@ -101,6 +102,9 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
         blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
                                    smoothing_function=chencherry.method1)
         print(i, blue_score)
+        blue_scores.append(blue_score)
+        break
+    return blue_scores
 
 
 if __name__ == '__main__':
@@ -126,4 +130,6 @@ if __name__ == '__main__':
     # training data and test data based on the reference messages
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
+    blue_scores = load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data, topK=k_nearest_neighbor)
+    write_file(path_file='./blue_scores_test_file.txt', data=blue_scores)
+    print(sum(blue_scores) / len(blue_scores))
