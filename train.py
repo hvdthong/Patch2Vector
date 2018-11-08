@@ -16,7 +16,7 @@ def train_model(commits, params):
     print('Dictionary of commit code has size: %i' % (len(dict_code)))
     # print pad_msg.shape, pad_added_code.shape, pad_removed_code.shape, labels.shape
 
-    print(pad_msg.shape)
-    print(pad_added_code.shape)
-    print(pad_removed_code.shape)
-    print(labels.shape)
+    batches = random_mini_batch(X_msg=pad_msg, X_added_code=pad_added_code, X_removed_code=pad_removed_code, Y=labels,
+                                mini_batch_size=params.batch_size)
+    print(len(batches))
+    params.cuda = (not params.)

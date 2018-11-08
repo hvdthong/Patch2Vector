@@ -96,6 +96,6 @@ def dictionary(data):
     lists = list(set(lists))
     lists.append("NULL")
     new_dict = dict()
-    for i in xrange(len(lists)):
+    for i in range(len(lists)):
         new_dict[lists[i]] = i
     return new_dict
