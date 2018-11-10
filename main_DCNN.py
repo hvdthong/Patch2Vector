@@ -1,14 +1,14 @@
 from ultis import extract_commit, reformat_commit_code
 from train import train_model
 import argparse
+import torch
+from PatchNet_CNN import PatchNet
 
 
 def read_args():
     parser = argparse.ArgumentParser()
     # Training our model
     parser.add_argument('--train', action='store_true', help='training PatchNet model')
-    parser.add_argument('--data', type=str, default='./data/train_small.text',
-                        help='the directory of our training data')
 
     # Predicting our data
     parser.add_argument('--predict', action='store_true', help='predicting testing data')
@@ -29,16 +29,30 @@ def read_args():
     parser.add_argument('--learning_rate', type=float, default=1e-4, help='learning rate')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size')
     parser.add_argument('--num_epochs', type=int, default=25, help='the number of epochs')
-    parser.add_argument('--evaluate_every', type=int, default=500, help='evaluate model after this many steps')
-    parser.add_argument('--checkpoint_every', type=int, default=1000, help='save model after this many steps')
-    parser.add_argument('--num_checkpoints', type=int, default=100, help='the number of checkpoints to store')
+    parser.add_argument('-log-interval', type=int, default=1,
+                        help='how many steps to wait before logging training status [default: 1]')
+    parser.add_argument('-test-interval', type=int, default=100,
+                        help='how many steps to wait before testing [default: 100]')
+    parser.add_argument('-save-interval', type=int, default=500,
+                        help='how many steps to wait before saving [default:500]')
+    parser.add_argument('-save-dir', type=str, default='snapshot', help='where to save the snapshot')
+    parser.add_argument('-early-stop', type=int, default=1000,
+                        help='iteration numbers to stop without performance increasing')
+    parser.add_argument('-save-best', type=bool, default=True, help='whether to save when get best performance')
 
     # Model
     parser.add_argument('--data_type', type=str, default='all', help='type of model for learning')
     parser.add_argument('--model', type=str, default='model', help='names of our model')
 
     # CUDA
+    parser.add_argument('-device', type=int, default=-1,
+                        help='device to use for iterate data, -1 mean cpu [default: -1]')
     parser.add_argument('-no-cuda', action='store_true', default=False, help='disable the GPU')
+
+    # option
+    parser.add_argument('-snapshot', type=str, default=None, help='filename of model snapshot [default: None]')
+    parser.add_argument('-predict', type=str, default=None, help='predict the sentence given')
+    parser.add_argument('-test', action='store_true', default=False, help='train or test')
     return parser
 
 
@@ -51,4 +65,5 @@ if __name__ == '__main__':
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
+
     train_model(commits=commits, params=input_option)
