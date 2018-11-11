@@ -8,10 +8,11 @@ import os
 import datetime
 from ultis import random_mini_batch, write_dict_file
 import torch
-
+from PatchNet_CNN import PatchNet
 
 def running_train(batches, model, params):
     print('hello')
+    exit()
 
 
 
@@ -39,5 +40,8 @@ def train_model(commits, params):
 
     # Device configuration
     params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    model = PatchNet(args=params)
+    running_train(batches=batches, model=model, params=params)
 
     exit()
