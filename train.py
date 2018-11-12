@@ -26,7 +26,7 @@ def running_train(batches, model, params):
                 feature, target = feature.cuda(), target.cuda()
 
             optimizer.zero_grad()
-            predict = model.forward(feature)
+            predict = model.forward(pad_msg)
 
 
 def train_model(commits, params):
@@ -44,7 +44,7 @@ def train_model(commits, params):
 
     params.filter_sizes = [int(k) for k in params.filter_sizes.split(',')]
     params.save_dir = os.path.join(params.save_dir, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
-    params.embed_msg, params.embed_code = len(dict_msg), len(dict_code)
+    params.vocab_msg, params.vocab_code = len(dict_msg), len(dict_code)
     params.class_num = labels.shape[1]
 
     print("\nParameters:")
