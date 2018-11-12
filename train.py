@@ -10,10 +10,23 @@ from ultis import random_mini_batch, write_dict_file
 import torch
 from PatchNet_CNN import PatchNet
 
-def running_train(batches, model, params):
-    print('hello')
-    exit()
 
+def running_train(batches, model, params):
+    if params.cuda:
+        model.cuda()
+    optimizer = torch.optim.Adam(model.parameters(), lr=params.l2_reg_lambda)
+    steps, best_acc, last_step = 0, 0, 0
+    for epoch in range(1, params.num_epochs + 1):
+        for batch in batches:
+            pad_msg, pad_added_code, pad_removed_code, labels = batch
+            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
+                pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
+
+            if params.cuda:
+                feature, target = feature.cuda(), target.cuda()
+
+            optimizer.zero_grad()
+            predict = model.forward(feature)
 
 
 def train_model(commits, params):

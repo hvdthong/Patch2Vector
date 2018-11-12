@@ -39,6 +39,7 @@ def read_args():
     parser.add_argument('-early-stop', type=int, default=1000,
                         help='iteration numbers to stop without performance increasing')
     parser.add_argument('-save-best', type=bool, default=True, help='whether to save when get best performance')
+    parser.add_argument('-static', action='store_true', default=False, help='fix the embedding')
 
     # Model
     parser.add_argument('--data_type', type=str, default='all', help='type of model for learning')
