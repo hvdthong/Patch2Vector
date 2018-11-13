@@ -31,7 +31,7 @@ def read_args():
     parser.add_argument('--num_epochs', type=int, default=25, help='the number of epochs')
     parser.add_argument('-log-interval', type=int, default=1,
                         help='how many steps to wait before logging training status [default: 1]')
-    parser.add_argument('-test-interval', type=int, default=100,
+    parser.add_argument('-test-interval', type=int, default=10,
                         help='how many steps to wait before testing [default: 100]')
     parser.add_argument('-save-interval', type=int, default=500,
                         help='how many steps to wait before saving [default:500]')
@@ -61,10 +61,9 @@ if __name__ == '__main__':
     input_option = read_args().parse_args()
     input_help = read_args().print_help()
 
-    # path_file = './data/newres_funcalls_words_jul28.out'
-    path_file = './data/small_newres_funcalls_words_jul28.out'
+    path_file = './data/newres_funcalls_words_jul28.out'
+    # path_file = './data/small_newres_funcalls_words_jul28.out'
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
-
     train_model(commits=commits, params=input_option)
