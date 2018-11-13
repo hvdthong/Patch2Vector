@@ -27,8 +27,13 @@ def running_train(batches, model, params):
     for epoch in range(1, params.num_epochs + 1):
         for batch in batches:
             pad_msg, pad_added_code, pad_removed_code, labels = batch
-            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
-                pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
+            if torch.cuda.is_available():
+                pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
+                    pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
+            else:
+                pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda.long(), torch.tensor(
+                    pad_added_code).cuda.long(), torch.tensor(pad_removed_code).cuda.long(), torch.tensor(
+                    labels).cuda.float()
 
             optimizer.zero_grad()
             predict = model.forward(pad_msg, pad_added_code, pad_removed_code)
