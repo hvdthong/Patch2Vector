@@ -58,12 +58,16 @@ class PatchNet(nn.Module):
         return x
 
     def forward(self, msg, added_code, removed_code):
-        x_msg = self.embed_msg(msg.cuda() if torch.cuda.is_available() else msg)
+        # x_msg = self.embed_msg(msg.cuda() if torch.cuda.is_available() else msg)
+        x_msg = self.embed_msg(msg)
         x_msg = self.forward_msg(x_msg, self.convs_msg)
 
-        x_added_code = self.embed_code(added_code.cuda() if torch.cuda.is_available() else added_code)
+        # x_added_code = self.embed_code(added_code.cuda() if torch.cuda.is_available() else added_code)
+        x_added_code = self.embed_code(added_code)
         x_added_code = self.forward_code(x_added_code, self.convs_code_line, self.convs_code_hunk)
-        x_removed_code = self.embed_code(removed_code.cuda() if torch.cuda.is_available() else removed_code)
+
+        # x_removed_code = self.embed_code(removed_code.cuda() if torch.cuda.is_available() else removed_code)
+        x_removed_code = self.embed_code(removed_code)
         x_removed_code = self.forward_code(x_removed_code, self.convs_code_line, self.convs_code_hunk)
 
         x_diff = x_added_code - x_removed_code  # measure the diff of the code changes
