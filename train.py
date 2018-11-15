@@ -31,11 +31,13 @@ def running_train(batches, model, params):
                 pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
                     pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
                 print('no cuda')
+                exit()
             else:
                 pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda.long(), torch.tensor(
                     pad_added_code).cuda.long(), torch.tensor(pad_removed_code).cuda.long(), torch.tensor(
                     labels).cuda.float()
                 print('cuda')
+                exit()
 
             optimizer.zero_grad()
             predict = model.forward(pad_msg, pad_added_code, pad_removed_code)
