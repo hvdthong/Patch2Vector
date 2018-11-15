@@ -47,15 +47,13 @@ def commit_embedding(path, commits, params):
     embedding_vectors, cnt = list(), 0
     for batch in batches:
         pad_msg, pad_added_code, pad_removed_code, labels = batch
-        print(type(pad_msg))
-        exit()
         if torch.cuda.is_available():
+            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(
+                pad_added_code).cuda(), torch.tensor(pad_removed_code).cuda(), torch.cuda.FloatTensor(labels)
+        else:
             pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
                 pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
-        else:
-            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda.long(), torch.tensor(
-                pad_added_code).cuda.long(), torch.tensor(pad_removed_code).cuda.long(), torch.tensor(
-                labels).cuda.float()
+
         predict = model.forward(pad_msg, pad_added_code, pad_removed_code)
         commits_vector = model.forward_commit_embeds(pad_msg, pad_added_code, pad_removed_code)
 
