@@ -28,9 +28,8 @@ def running_train(batches, model, params):
         for batch in batches:
             pad_msg, pad_added_code, pad_removed_code, labels = batch
             if torch.cuda.is_available():
-                pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda.long(), torch.tensor(
-                    pad_added_code).cuda.long(), torch.tensor(pad_removed_code).cuda.long(), torch.tensor(
-                    labels).cuda.float()
+                pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(
+                    pad_added_code).cuda(), torch.tensor(pad_removed_code).cuda(), torch.tensor(labels).cuda()
                 print('cuda')
                 exit()
             else:
