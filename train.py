@@ -90,5 +90,5 @@ def train_model(commits, params):
     model = PatchNet(args=params)
     if torch.cuda.is_available():
         model = model.cuda()
-        
+
     running_train(batches=batches, model=model, params=params)
