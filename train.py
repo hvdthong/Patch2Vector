@@ -88,4 +88,7 @@ def train_model(commits, params):
     params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     model = PatchNet(args=params)
+    if torch.cuda.is_available():
+        model = model.cuda()
+        
     running_train(batches=batches, model=model, params=params)
