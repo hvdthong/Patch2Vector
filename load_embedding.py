@@ -6,6 +6,7 @@ import torch
 from PatchNet_CNN import PatchNet
 import os
 import datetime
+import numpy as np
 
 
 def collect_batches(commits, params):
@@ -43,17 +44,34 @@ def collect_batches(commits, params):
 def commit_embedding(path, commits, params):
     batches, model = collect_batches(commits=commits, params=params)
     model.load_state_dict(torch.load(path))
+    embedding_vectors, cnt = list(), 0
     for batch in batches:
         pad_msg, pad_added_code, pad_removed_code, labels = batch
-        pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
-            pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
+        print(type(pad_msg))
+        exit()
+        if torch.cuda.is_available():
+            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).long(), torch.tensor(
+                pad_added_code).long(), torch.tensor(pad_removed_code).long(), torch.tensor(labels).float()
+        else:
+            pad_msg, pad_added_code, pad_removed_code, labels = torch.tensor(pad_msg).cuda.long(), torch.tensor(
+                pad_added_code).cuda.long(), torch.tensor(pad_removed_code).cuda.long(), torch.tensor(
+                labels).cuda.float()
         predict = model.forward(pad_msg, pad_added_code, pad_removed_code)
         commits_vector = model.forward_commit_embeds(pad_msg, pad_added_code, pad_removed_code)
+
         print(type(predict))
         print(predict.shape)
         print(predict)
         print(commits_vector.shape)
+        if torch.cuda.is_available():
+            commits_vector = commits_vector.detach().numpy()
+        else:
+            commits_vector = commits_vector.cpu().detach().numpy()
+        print(commits_vector.shape)
+        print(type(commits_vector))
+        print('cuda test')
         exit()
+        cnt += 1
 
 
 if __name__ == '__main__':
@@ -65,5 +83,6 @@ if __name__ == '__main__':
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
+    date = '/2018-11-13_14-41-49/'
     path_model = './snapshot/2018-11-13_14-41-49/epoch_epochs_18.pt'
     commit_embedding(path=path_model, commits=commits, params=input_option)
