@@ -28,7 +28,7 @@ def read_args():
     parser.add_argument('--l2_reg_lambda', type=float, default=1e-5, help='regularization rate')
     parser.add_argument('--learning_rate', type=float, default=1e-4, help='learning rate')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size')
-    parser.add_argument('--num_epochs', type=int, default=25, help='the number of epochs')
+    parser.add_argument('--num_epochs', type=int, default=100, help='the number of epochs')
     parser.add_argument('-log-interval', type=int, default=1,
                         help='how many steps to wait before logging training status [default: 1]')
     parser.add_argument('-test-interval', type=int, default=10,
@@ -54,6 +54,11 @@ def read_args():
     parser.add_argument('-snapshot', type=str, default=None, help='filename of model snapshot [default: None]')
     parser.add_argument('-predict', type=str, default=None, help='predict the sentence given')
     parser.add_argument('-test', action='store_true', default=False, help='train or test')
+
+    # option to load model
+    parser.add_argument('-datetime', type=str, default=None, help='date of model [default: None]')
+    parser.add_argument('-start_epoch', type=int, default=None, help='starting epoch of loading model')
+    parser.add_argument('-end_epoch', type=int, default=None, help='ending epoch of loading model')
     return parser
 
 
