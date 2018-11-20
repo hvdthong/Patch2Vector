@@ -11,7 +11,7 @@ def read_args():
     parser.add_argument('-train', action='store_true', help='training PatchNet model')
 
     # Predicting our data
-    parser.add_argument('-predict', action='store_true', help='predicting testing data')
+    parser.add_argument('--predict', action='store_true', help='predicting testing data')
 
     # Number of parameters for reformatting commits
     parser.add_argument('-msg_length', type=int, default=512, help='the length of the commit message')
