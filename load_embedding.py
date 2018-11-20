@@ -86,5 +86,5 @@ if __name__ == '__main__':
                                    num_loc=10, num_leng=120)
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
     for epoch in range(input_option.start_epoch, input_option.end_epoch + 1):
-        path_model = './snapshot/' + input_option.datetime + '/epoch_epochs_' + str(input_option.start_epoch) + '.pt'
+        path_model = './snapshot/' + input_option.datetime + '/epoch_' + str(input_option.start_epoch) + '.pt'
         commit_embedding(path=path_model, commits=commits, params=input_option, nepoch=epoch)
