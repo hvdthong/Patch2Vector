@@ -86,5 +86,5 @@ if __name__ == '__main__':
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
     batches, model = collect_batches(commits=commits, params=input_option)
     for epoch in range(input_option.start_epoch, input_option.end_epoch + 1):
-        path_model = './snapshot/' + input_option.datetime + '/epoch_' + str(input_option.start_epoch) + '.pt'
+        path_model = './snapshot/' + input_option.datetime + '/epoch_' + str(epoch) + '.pt'
         commit_embedding(path=path_model, batches=batches, model=model, params=input_option, nepoch=epoch)
