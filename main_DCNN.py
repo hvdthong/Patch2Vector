@@ -8,27 +8,27 @@ from PatchNet_CNN import PatchNet
 def read_args():
     parser = argparse.ArgumentParser()
     # Training our model
-    parser.add_argument('--train', action='store_true', help='training PatchNet model')
+    parser.add_argument('-train', action='store_true', help='training PatchNet model')
 
     # Predicting our data
-    parser.add_argument('--predict', action='store_true', help='predicting testing data')
+    parser.add_argument('-predict', action='store_true', help='predicting testing data')
 
     # Number of parameters for reformatting commits
-    parser.add_argument('--msg_length', type=int, default=512, help='the length of the commit message')
-    parser.add_argument('--code_hunk', type=int, default=8, help='the number of hunks in commit code')
-    parser.add_argument('--code_line', type=int, default=10, help='the number of LOC in each hunk of commit code')
-    parser.add_argument('--code_length', type=int, default=120, help='the length of each LOC of commit code')
+    parser.add_argument('-msg_length', type=int, default=512, help='the length of the commit message')
+    parser.add_argument('-code_hunk', type=int, default=8, help='the number of hunks in commit code')
+    parser.add_argument('-code_line', type=int, default=10, help='the number of LOC in each hunk of commit code')
+    parser.add_argument('-code_length', type=int, default=120, help='the length of each LOC of commit code')
 
     # Number of parameters for PatchNet model
-    parser.add_argument('--embedding_dim', type=int, default=32, help='the dimension of embedding vector')
-    parser.add_argument('--filter_sizes', type=str, default='1, 2', help='the filter size of convolutional layers')
-    parser.add_argument('--num_filters', type=int, default=32, help='the number of filters')
-    parser.add_argument('--hidden_units', type=int, default=128, help='the number of nodes in hidden layers')
-    parser.add_argument('--dropout_keep_prob', type=float, default=0.5, help='dropout for training PatchNet')
-    parser.add_argument('--l2_reg_lambda', type=float, default=1e-5, help='regularization rate')
-    parser.add_argument('--learning_rate', type=float, default=1e-4, help='learning rate')
-    parser.add_argument('--batch_size', type=int, default=64, help='batch size')
-    parser.add_argument('--num_epochs', type=int, default=100, help='the number of epochs')
+    parser.add_argument('-embedding_dim', type=int, default=32, help='the dimension of embedding vector')
+    parser.add_argument('-filter_sizes', type=str, default='1, 2', help='the filter size of convolutional layers')
+    parser.add_argument('-num_filters', type=int, default=32, help='the number of filters')
+    parser.add_argument('-hidden_units', type=int, default=128, help='the number of nodes in hidden layers')
+    parser.add_argument('-dropout_keep_prob', type=float, default=0.5, help='dropout for training PatchNet')
+    parser.add_argument('-l2_reg_lambda', type=float, default=1e-5, help='regularization rate')
+    parser.add_argument('-learning_rate', type=float, default=1e-4, help='learning rate')
+    parser.add_argument('-batch_size', type=int, default=64, help='batch size')
+    parser.add_argument('-num_epochs', type=int, default=100, help='the number of epochs')
     parser.add_argument('-log-interval', type=int, default=1,
                         help='how many steps to wait before logging training status [default: 1]')
     parser.add_argument('-test-interval', type=int, default=10,
@@ -42,8 +42,8 @@ def read_args():
     parser.add_argument('-static', action='store_true', default=False, help='fix the embedding')
 
     # Model
-    parser.add_argument('--data_type', type=str, default='all', help='type of model for learning')
-    parser.add_argument('--model', type=str, default='model', help='names of our model')
+    parser.add_argument('-data_type', type=str, default='all', help='type of model for learning')
+    parser.add_argument('-model', type=str, default='model', help='names of our model')
 
     # CUDA
     parser.add_argument('-device', type=int, default=-1,
