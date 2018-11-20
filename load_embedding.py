@@ -58,9 +58,9 @@ def commit_embedding(path, commits, params, nepoch):
         commits_vector = model.forward_commit_embeds(pad_msg, pad_added_code, pad_removed_code)
 
         if torch.cuda.is_available():
-            commits_vector = commits_vector.detach().numpy()
-        else:
             commits_vector = commits_vector.cpu().detach().numpy()
+        else:
+            commits_vector = commits_vector.detach().numpy()
 
         if cnt == 0:
             embedding_vectors = commits_vector
