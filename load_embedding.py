@@ -40,8 +40,7 @@ def collect_batches(commits, params):
     return batches, model
 
 
-def commit_embedding(path, commits, params, nepoch):
-    batches, model = collect_batches(commits=commits, params=params)
+def commit_embedding(path, batches, model, params, nepoch):
     model.load_state_dict(torch.load(path))
     embedding_vectors, cnt = list(), 0
     print(path)
@@ -85,6 +84,7 @@ if __name__ == '__main__':
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
+    batches, model = collect_batches(commits=commits, params=input_option)
     for epoch in range(input_option.start_epoch, input_option.end_epoch + 1):
         path_model = './snapshot/' + input_option.datetime + '/epoch_' + str(input_option.start_epoch) + '.pt'
-        commit_embedding(path=path_model, commits=commits, params=input_option, nepoch=epoch)
+        commit_embedding(path=path_model, batches=batches, model=model, params=input_option, nepoch=epoch)
