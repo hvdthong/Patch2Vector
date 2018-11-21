@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     docs = [tb(c[1].replace(',', ' ').strip()) for c in commit_msg]  # index 0 is an ID , index 1 is a message
     data_print = list()
-    for i in range(0, 5):
+    for i in range(start, end):
         print("Top words in document {}".format(i))
         data_print.append('Top words in document {}'.format(i))
         scores = {word: tfidf(word, docs[i], docs) for word in docs[i].words}
