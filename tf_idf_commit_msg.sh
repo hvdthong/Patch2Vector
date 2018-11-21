@@ -13,4 +13,7 @@ python tf_idf_commit_msg.py 55000 60000 &
 python tf_idf_commit_msg.py 60000 65000 &
 python tf_idf_commit_msg.py 65000 70000 &
 python tf_idf_commit_msg.py 70000 75000 &
+python tf_idf_commit_msg.py 75000 80000 &
 python tf_idf_commit_msg.py 80000 80550 &
+
+
