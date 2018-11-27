@@ -57,6 +57,17 @@ def write_file(path_file, data):
         out_file.close()
 
 
+def select_commit_based_topwords(words, commits):
+    new_commit = list()
+    for c in commits:
+        msg = c['msg'].split(',')
+        for w in msg:
+            if w in words:
+                new_commit.append(c)
+                break
+    return new_commit
+
+
 def commits_index(commits):
     commits_index = [i for i, c in enumerate(commits) if c.startswith("commit:")]
     return commits_index
