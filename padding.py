@@ -127,6 +127,26 @@ def load_label_commits(commits):
 
 ###########################################################################
 ###########################################################################
+def padding_commit_topwords(commits, params):
+    codes = extract_code(commits=commits)
+    dict_code = dictionary(data=codes)
+
+    # padding commit code
+    pad_added_code = mapping_commit_code(type="added", commits=commits, max_hunk=params.code_hunk,
+                                         max_code_line=params.code_line,
+                                         max_code_length=params.code_length, dict_code=dict_code)
+    pad_removed_code = mapping_commit_code(type="removed", commits=commits, max_hunk=params.code_hunk,
+                                           max_code_line=params.code_line,
+                                           max_code_length=params.code_length, dict_code=dict_code)
+    return pad_added_code, pad_removed_code, dict_code
+
+
+def padding_label_topwords(commits, topwords):
+    labels_ = np.array([1 if w in c['msg'].split(',') else 0 for c in commits for w in topwords])
+    labels_ = np.reshape(labels_, (int(labels_.shape[0] / len(topwords)), len(topwords)))
+    return labels_
+
+
 def padding_commit(commits, params):
     msgs, codes = extract_msg(commits=commits), extract_code(commits=commits)
     dict_msg, dict_code = dictionary(data=msgs), dictionary(data=codes)

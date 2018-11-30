@@ -3,12 +3,11 @@ import torch
 import torch.nn.functional as F
 
 
-class PatchNet(nn.Module):
+class PatchEmbedding(nn.Module):
     def __init__(self, args):
-        super(PatchNet, self).__init__()
+        super(PatchEmbedding, self).__init__()
         self.args = args
 
-        V_msg = args.vocab_msg
         V_code = args.vocab_code
         Dim = args.embedding_dim
         Class = args.class_num
@@ -16,10 +15,6 @@ class PatchNet(nn.Module):
         Ci = 1  # input of convolutional layer
         Co = args.num_filters  # output of convolutional layer
         Ks = args.filter_sizes  # kernel sizes
-
-        # CNN-2D for commit message
-        self.embed_msg = nn.Embedding(V_msg, Dim)
-        self.convs_msg = nn.ModuleList([nn.Conv2d(Ci, Co, (K, Dim)) for K in Ks])
 
         # CNN-3D for commit code
         code_line = args.code_line  # the number of LOC in each hunk of commit code
@@ -29,11 +24,11 @@ class PatchNet(nn.Module):
 
         # other information
         self.dropout = nn.Dropout(args.dropout_keep_prob)
-        self.fc1 = nn.Linear(2 * len(Ks) * Co, args.hidden_units)  # hidden units
+        self.fc1 = nn.Linear(len(Ks) * Co, args.hidden_units)  # hidden units
         self.fc2 = nn.Linear(args.hidden_units, Class)
         self.sigmoid = nn.Sigmoid()
 
-    def forward_msg(self, x, convs):
+    def forward_msg(self, x, convs):  # can be used for CNN-2D
         # note that we can use this function for commit code line to get the information of the line
         x = x.unsqueeze(1)  # (N, Ci, W, D)
         x = [F.relu(conv(x)).squeeze(3) for conv in convs]  # [(N, Co, W), ...]*len(Ks)
@@ -56,11 +51,7 @@ class PatchNet(nn.Module):
         x = torch.cat(x, 1)
         return x
 
-    def forward(self, msg, added_code, removed_code):
-        # x_msg = self.embed_msg(msg.cuda() if torch.cuda.is_available() else msg)
-        x_msg = self.embed_msg(msg)
-        x_msg = self.forward_msg(x_msg, self.convs_msg)
-
+    def forward(self, added_code, removed_code):
         # x_added_code = self.embed_code(added_code.cuda() if torch.cuda.is_available() else added_code)
         x_added_code = self.embed_code(added_code)
         x_added_code = self.forward_code(x_added_code, self.convs_code_line, self.convs_code_hunk)
@@ -71,7 +62,7 @@ class PatchNet(nn.Module):
 
         x_diff = x_added_code - x_removed_code  # measure the diff of the code changes
 
-        x_commit = torch.cat((x_msg, x_diff), 1)
+        x_commit = x_diff
         x_commit = self.dropout(x_commit)
         out = self.fc1(x_commit)
         out = F.relu(out)
@@ -79,10 +70,7 @@ class PatchNet(nn.Module):
         out = self.sigmoid(out).squeeze(1)
         return out
 
-    def forward_commit_embeds(self, msg, added_code, removed_code):
-        x_msg = self.embed_msg(msg.cuda() if torch.cuda.is_available() else msg)
-        x_msg = self.forward_msg(x_msg, self.convs_msg)
-
+    def forward_commit_embeds(self, added_code, removed_code):
         x_added_code = self.embed_code(added_code.cuda() if torch.cuda.is_available() else added_code)
         x_added_code = self.forward_code(x_added_code, self.convs_code_line, self.convs_code_hunk)
         x_removed_code = self.embed_code(removed_code.cuda() if torch.cuda.is_available() else removed_code)
@@ -90,5 +78,5 @@ class PatchNet(nn.Module):
 
         x_diff = x_added_code - x_removed_code  # measure the diff of the code changes
 
-        x_commit = torch.cat((x_msg, x_diff), 1)
+        x_commit = x_diff
         return x_commit
