@@ -46,6 +46,7 @@ def running_train(batches, model, params):
 def train_model_topwords(commits, params, topwords):
     pad_added_code, pad_removed_code, dict_code = padding_commit_topwords(commits=commits, params=params)
     print('Dictionary of commit code has size: %i' % (len(dict_code)))
+    print(pad_added_code.shape, pad_removed_code.shape)
 
     labels = padding_label_topwords(commits=commits, topwords=topwords)
     batches = mini_batches_topwords(X_added_code=pad_added_code, X_removed_code=pad_removed_code, Y=labels,
