@@ -101,8 +101,13 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK, datetime, num_epo
     ref_train, ref_test = ref_msg
     blue_scores = list()
     for i in range(tf_diff_test.shape[0]):
-        cosine_sim = np.loadtxt(
-            './cosine_embedding/' + datetime + '/epoch_' + str(num_epoch) + '/test_' + str(i) + '.txt')
+        element = tf_diff_test[i, :]
+        element = np.reshape(element, (1, element.shape[0]))
+        cosine_sim = cosine_similarity(X=tf_diff_train, Y=element)
+
+        # cosine_sim = np.loadtxt(
+        #     './cosine_embedding/' + datetime + '/epoch_' + str(num_epoch) + '/test_' + str(i) + '.txt')
+
         topK_index = finding_topK(cosine_sim=cosine_sim, topK=topK)
         bestK = finding_bestK(diff_trains=org_diff_train, diff_test=org_diff_test[i], topK_index=topK_index)
         train_msg, test_msg = ref_train[bestK], ref_test[i]
@@ -134,9 +139,10 @@ if __name__ == '__main__':
     commits = select_commit_based_topwords(words=topwords, commits=commits)
 
     datetime, num_epoch = input_option.datetime, input_option.start_epoch
+    # datetime, num_epoch = '2018-11-30_12-51-04', 1
 
     msgs, codes = reformat_data(data=commits)
-    nfold = 5  # number of cross-validation
+    nfold = 9  # number of cross-validation
     org_diff_data, tf_diff_data, ref_data = fold_data(datetime=datetime, num_epoch=num_epoch, message=msgs,
                                                       org_code=codes, fold=nfold)
     k_nearest_neighbor = 5
