@@ -45,9 +45,9 @@ def write_file(path_file, data):
     split_path = path_file.split("/")
     path_ = split_path[:len(split_path) - 1]
     path_ = "/".join(path_)
-
-    if not os.path.exists(path_):
-        os.makedirs(path_)
+    if len(split_path) > 1:
+        if not os.path.exists(path_):
+            os.makedirs(path_)
 
     with open(path_file, 'w') as out_file:
         for line in data:
