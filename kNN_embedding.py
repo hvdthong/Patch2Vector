@@ -127,8 +127,8 @@ if __name__ == '__main__':
     input_option = read_args().parse_args()
     input_help = read_args().print_help()
 
-    path_file = './data/newres_funcalls_words_jul28.out'
-    # path_file = './data/small_newres_funcalls_words_jul28.out'
+    # path_file = './data/newres_funcalls_words_jul28.out'
+    path_file = './data/small_newres_funcalls_words_jul28.out'
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     # calculating the cosine similarity between each element in testing data to training data
     # ---------------------------------------------------------------------------------------------------------
     # ---------------------------------------------------------------------------------------------------------
-    kNN_model(tf_diff_code=tf_diff_data, datetime=datetime, num_epoch=num_epoch)
+    # kNN_model(tf_diff_code=tf_diff_data, datetime=datetime, num_epoch=num_epoch)
 
     # loading cosine similarity data and get the top K nearest neighbors, and calculate BLEU-score between diff-code
     # Then we identify the nearest neighbor and get the reference message, we then calculate the BLEU-score between
