@@ -19,8 +19,11 @@ if __name__ == '__main__':
     print('Mean of blue scores: ' + str(statistics.mean(blue_scores)))
     # print('Std of blue scores: ' + str(statistics.stdev(blue_scores)))
 
-    datetime, start_epoch, end_epoch = '2018-11-30_06-28-52', 1, 50
+    # datetime, start_epoch, end_epoch = '2018-11-30_06-28-52', 1, 50
+    # blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
+    #
+    datetime, start_epoch, end_epoch = '2018-11-30_06-29-51', 1, 50
     blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
 
-    datetime, start_epoch, end_epoch = '2018-11-30_06-29-51', 1, 50
+    datetime, start_epoch, end_epoch = '2018-11-30_07-33-38', 1, 50
     blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
