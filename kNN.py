@@ -1,4 +1,4 @@
-from ultis import extract_commit, reformat_commit_code, write_file
+from ultis import extract_commit, reformat_commit_code, write_file, load_file, select_commit_based_topwords
 from extracting import extract_msg, extract_code
 from sklearn.model_selection import KFold
 from sklearn.feature_extraction.text import CountVectorizer
@@ -94,7 +94,7 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
     ref_train, ref_test = ref_msg
     blue_scores = list()
     for i in range(tf_diff_test.shape[0]):
-        cosine_sim = np.loadtxt('./tf_cosine_similarity/test_' + str(i) + '.txt')
+        cosine_sim = np.loadtxt('./tf_cosine_similarity_ver1/test_' + str(i) + '.txt')
         topK_index = finding_topK(cosine_sim=cosine_sim, topK=topK)
         bestK = finding_bestK(diff_trains=org_diff_train, diff_test=org_diff_test[i], topK_index=topK_index)
         train_msg, test_msg = ref_train[bestK], ref_test[i]
@@ -108,12 +108,20 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK):
 
 if __name__ == '__main__':
     path_file = './data/newres_funcalls_words_jul28.out'
-    path_file = './data/small_newres_funcalls_words_jul28.out'
+    # path_file = './data/small_newres_funcalls_words_jul28.out'
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
+    ## choose the commits which have the commit message in the top words.
+    path_topwords = './data/top_words_commitmsg_1000.txt'
+    topwords = load_file(path_file=path_topwords)
+    commits = select_commit_based_topwords(words=topwords, commits=commits)
+
+    # ---------------------------------------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------------------------------------
     msgs, codes = reformat_data(data=commits)
-    nfold = 5  # number of cross-validation
+    # nfold = 5  # number of cross-validation
+    nfold = 9  # number of cross-validation
     org_diff_data, tf_diff_data, ref_data = fold_data(message=msgs, org_code=codes, tf_code=make_features(data=codes),
                                                       fold=nfold)
     k_nearest_neighbor = 5
