@@ -14,7 +14,8 @@ if __name__ == '__main__':
                                    num_loc=10, num_leng=120)
 
     ## choose the commits which have the commit message in the top words.
-    path_topwords = './data/top_words_commitmsg_1000.txt'
+    # path_topwords = './data/top_words_commitmsg_1000.txt'
+    path_topwords = './data/top_words_commitmsg_all.txt'
     topwords = load_file(path_file=path_topwords)
     commits = select_commit_based_topwords(words=topwords, commits=commits)
 
