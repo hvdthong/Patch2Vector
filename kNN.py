@@ -112,6 +112,7 @@ if __name__ == '__main__':
     commits = extract_commit(path_file=path_file)
     commits = reformat_commit_code(commits=commits, num_file=1, num_hunk=8,
                                    num_loc=10, num_leng=120)
+
     ## choose the commits which have the commit message in the top words.
     path_topwords = './data/top_words_commitmsg_1000.txt'
     topwords = load_file(path_file=path_topwords)
