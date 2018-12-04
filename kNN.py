@@ -114,7 +114,8 @@ if __name__ == '__main__':
                                    num_loc=10, num_leng=120)
 
     ## choose the commits which have the commit message in the top words.
-    path_topwords = './data/top_words_commitmsg_1000.txt'
+    # path_topwords = './data/top_words_commitmsg_1000.txt'
+    path_topwords = './data/top_words_commitmsg_all.txt'
     topwords = load_file(path_file=path_topwords)
     commits = select_commit_based_topwords(words=topwords, commits=commits)
 
@@ -141,5 +142,6 @@ if __name__ == '__main__':
     # ---------------------------------------------------------------------------------------------------------
     blue_scores = load_kNN_model(org_diff_code=org_diff_data, tf_diff_code=tf_diff_data, ref_msg=ref_data,
                                  topK=k_nearest_neighbor)
-    write_file(path_file='./knn_blue_scores_test_file.txt', data=blue_scores)
+    # write_file(path_file='./knn_blue_scores_test_file_top1000.txt', data=blue_scores)
+    write_file(path_file='./knn_blue_scores_test_file_all.txt', data=blue_scores)
     print(sum(blue_scores) / len(blue_scores))

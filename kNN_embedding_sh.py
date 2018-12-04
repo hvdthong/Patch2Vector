@@ -22,11 +22,18 @@ if __name__ == '__main__':
     # num_filters = 64
     # start_epoch, end_epoch = 1, 50
 
-    datetime = '2018-11-30_08-57-11'
-    embedding_dim = 64
+    # datetime = '2018-11-30_08-57-11'
+    # embedding_dim = 64
+    # filter_sizes = '1,2,3'
+    # hidden_units = 256
+    # num_filters = 64
+    # start_epoch, end_epoch = 1, 50
+
+    datetime = '2018-12-03_06-45-10'
+    embedding_dim = 16
     filter_sizes = '1,2,3'
-    hidden_units = 256
-    num_filters = 64
+    hidden_units = 128
+    num_filters = 32
     start_epoch, end_epoch = 1, 50
 
     data = list()
