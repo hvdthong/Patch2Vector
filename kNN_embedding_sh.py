@@ -36,12 +36,19 @@ if __name__ == '__main__':
     # num_filters = 32
     # start_epoch, end_epoch = 1, 50
 
-    datetime = '2018-12-03_13-37-28'
-    embedding_dim = 64
+    datetime = '2018-12-03_06-47-28'
+    embedding_dim = 128
     filter_sizes = '1,2,3'
-    hidden_units = 256
-    num_filters = 64
-    start_epoch, end_epoch = 1, 45
+    hidden_units = 128
+    num_filters = 32
+    start_epoch, end_epoch = 1, 50
+
+    # datetime = '2018-12-03_13-37-28'
+    # embedding_dim = 64
+    # filter_sizes = '1,2,3'
+    # hidden_units = 256
+    # num_filters = 64
+    # start_epoch, end_epoch = 1, 45
 
     data = list()
     for i in range(start_epoch, end_epoch + 1):
