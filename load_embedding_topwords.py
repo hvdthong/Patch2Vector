@@ -87,6 +87,7 @@ if __name__ == '__main__':
     path_topwords = './data/top_words_commitmsg_simplified.txt'
     topwords = load_file(path_file=path_topwords)
     commits = select_commit_based_topwords(words=topwords, commits=commits)
+    print(len(commits))
 
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
     batches, model = collect_batches(commits=commits, params=input_option)
