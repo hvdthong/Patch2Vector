@@ -24,7 +24,7 @@ def dictionary_code(data):
 def padding_length(line, max_length):
     line_length = len(line.split())
     if line_length < max_length:
-        return str(line + ' NULL' * (max_length - line_length)).strip()
+        return str(line + ' <NULL>' * (max_length - line_length)).strip()
     elif line_length > max_length:
         line_split = line.split()
         return " ".join([line_split[i] for i in range(max_length)])
@@ -50,7 +50,7 @@ def padding_commit_code_line(data, max_line, max_length):
         else:
             num_added_line = max_line - len(d)
             for i in range(num_added_line):
-                d.append(('NULL ' * max_length).strip())
+                d.append(('<NULL> ' * max_length).strip())
             new_data.append(d)
     return new_data
 
