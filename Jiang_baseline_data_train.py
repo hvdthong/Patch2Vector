@@ -4,14 +4,43 @@ from Jiang_baseline_data_padding import padding_commit_code, commit_msg_label
 from ultis import mini_batches_topwords
 import numpy as np
 import datetime
-from PatchEmbedding_CNN import PatchEmbedding
-from train_topwords import running_train
+from Jiang_baseline_data_PatchEmbedding import PatchEmbedding
+import torch.nn as nn
+from train_topwords import save
 
 
 def reshape_code(data):
     ncommit, nline, nlength = data.shape[0], data.shape[1], data.shape[2]
     data = np.reshape(data, (ncommit, 1, nline, nlength))
     return data
+
+
+def running_train(batches, model, params):
+    optimizer = torch.optim.Adam(model.parameters(), lr=params.l2_reg_lambda)
+    steps, num_epoch = 0, 1
+    for epoch in range(1, params.num_epochs + 1):
+        for batch in batches:
+            pad_added_code, pad_removed_code, labels = batch
+            if torch.cuda.is_available():
+                pad_added_code, pad_removed_code, labels = torch.tensor(pad_added_code).cuda(), torch.tensor(
+                    pad_removed_code).cuda(), torch.cuda.FloatTensor(labels)
+            else:
+                pad_added_code, pad_removed_code, labels = torch.tensor(pad_added_code).long(), torch.tensor(
+                    pad_removed_code).long(), torch.tensor(labels).float()
+
+            optimizer.zero_grad()
+            predict = model.forward(pad_added_code, pad_removed_code)
+            loss = nn.BCELoss()
+            loss = loss(predict, labels)
+            loss.backward()
+            optimizer.step()
+
+            steps += 1
+            if steps % params.log_interval == 0:
+                print('\rEpoch: {} step: {} - loss: {:.6f}'.format(num_epoch, steps, loss.item()))
+
+        save(model, params.save_dir, 'epoch', num_epoch)
+        num_epoch += 1
 
 
 
