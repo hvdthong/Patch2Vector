@@ -70,9 +70,9 @@ class PatchEmbedding(nn.Module):
 
     def forward_commit_embeds(self, added_code, removed_code):
         x_added_code = self.embed_code(added_code.cuda() if torch.cuda.is_available() else added_code)
-        x_added_code = self.forward_code(x_added_code, self.convs_code_line, self.convs_code_hunk)
+        x_added_code = self.forward_code(x_added_code, self.convs_code_line, self.convs_code_multiple_line)
         x_removed_code = self.embed_code(removed_code.cuda() if torch.cuda.is_available() else removed_code)
-        x_removed_code = self.forward_code(x_removed_code, self.convs_code_line, self.convs_code_hunk)
+        x_removed_code = self.forward_code(x_removed_code, self.convs_code_line, self.convs_code_multiple_line)
 
         x_diff = x_added_code - x_removed_code  # measure the diff of the code changes
 

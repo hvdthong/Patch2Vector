@@ -30,7 +30,7 @@ if __name__ == '__main__':
     ##################################################################################
     ##################################################################################
 
-    # train_model(commit_diff=data_diff[:500], commit_msg=data_msg[:500], params=input_option,
-    #             padding_code_info=padding_code_info)
-    train_model(commit_diff=data_diff, commit_msg=data_msg, params=input_option,
+    train_model(commit_diff=data_diff[:500], commit_msg=data_msg[:500], params=input_option,
                 padding_code_info=padding_code_info)
+    # train_model(commit_diff=data_diff, commit_msg=data_msg, params=input_option,
+    #             padding_code_info=padding_code_info)
