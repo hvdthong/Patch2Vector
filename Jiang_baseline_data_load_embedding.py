@@ -49,10 +49,6 @@ def collect_batches(commit_diff, commit_msg, params, padding_code_info):
 if __name__ == '__main__':
     input_option = read_args().parse_args()
     input_help = read_args().print_help()
-    # print(input_option.filter_sizes)
-    # print(input_option.filter_sizes.split(','))
-    # print(type(input_option.filter_sizes.split(',')))
-    # exit()
 
     # loading the commit code
     ##################################################################################
