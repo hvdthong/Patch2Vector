@@ -64,6 +64,20 @@ if __name__ == '__main__':
     # num_filters = 64
     # start_epoch, end_epoch = 1, 50
 
+    # data = list()
+    # for i in range(start_epoch, end_epoch + 1):
+    #     print('python kNN_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
+    #         embedding_dim) + ' -filter_sizes ' + filter_sizes + ' -hidden_units ' + str(
+    #         hidden_units) + ' -num_filters ' + str(num_filters) + ' -start_epoch ' + str(i) + ' &')
+    #     data.append('python kNN_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
+    #         embedding_dim) + ' -filter_sizes ' + filter_sizes + ' -hidden_units ' + str(
+    #         hidden_units) + ' -num_filters ' + str(num_filters) + ' -start_epoch ' + str(i) + ' &')
+    # write_file(path_file=datetime + '.sh', data=data)
+
+
+    #################################################################################################
+    #################################################################################################
+    # Jiang's data
     datetime = '2018-12-12_01-04-31'
     embedding_dim = 64
     filter_sizes = '1,2,3'
@@ -73,10 +87,10 @@ if __name__ == '__main__':
 
     data = list()
     for i in range(start_epoch, end_epoch + 1):
-        print('python kNN_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
+        print('python Jiang_baseline_data_knn_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
             embedding_dim) + ' -filter_sizes ' + filter_sizes + ' -hidden_units ' + str(
             hidden_units) + ' -num_filters ' + str(num_filters) + ' -start_epoch ' + str(i) + ' &')
-        data.append('python kNN_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
+        data.append('python Jiang_baseline_data_knn_embedding.py -datetime ' + datetime + ' -embedding_dim ' + str(
             embedding_dim) + ' -filter_sizes ' + filter_sizes + ' -hidden_units ' + str(
             hidden_units) + ' -num_filters ' + str(num_filters) + ' -start_epoch ' + str(i) + ' &')
     write_file(path_file=datetime + '.sh', data=data)

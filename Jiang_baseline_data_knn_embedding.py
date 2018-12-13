@@ -64,7 +64,7 @@ if __name__ == '__main__':
     data_msg = data_train_msg + data_test_msg
 
     datetime, num_epoch = input_option.datetime, input_option.start_epoch
-    datetime, num_epoch = '2018-12-12_01-04-31', 1
+    # datetime, num_epoch = '2018-12-12_01-04-31', 1
     msgs, codes = data_diff, data_msg
     org_diff_data, tf_diff_data, ref_data = fold_data(datetime=datetime, num_epoch=num_epoch, message=msgs,
                                                       org_code=codes)

@@ -44,5 +44,11 @@ if __name__ == '__main__':
     # datetime, start_epoch, end_epoch = '2018-12-03_13-37-28', 1, 45
     # blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
 
-    datetime, start_epoch, end_epoch = '2018-12-04_13-49-19', 1, 50
+    # datetime, start_epoch, end_epoch = '2018-12-04_13-49-19', 1, 50
+    # blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
+
+    # datetime, start_epoch, end_epoch = '2018-12-06_04-42-49', 1, 50
+    # blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
+
+    datetime, start_epoch, end_epoch = '2018-12-12_01-04-31', 1, 50
     blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
