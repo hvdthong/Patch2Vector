@@ -24,8 +24,7 @@ def load_code_data(pfile):
 
 def fold_data(datetime, num_epoch, message, org_code):
     idx_train = [i for i in range(26208)]
-    # idx_test = [i for i in range(26208, 29208)]
-    idx_test = [i for i in range(26208, 26210)]
+    idx_test = [i for i in range(26208, 29208)]
     patch_embedding = make_features(datetime=datetime, num_epoch=num_epoch)
     diff_train, diff_test = patch_embedding[idx_train], patch_embedding[idx_test]
     ref_train, ref_test = get_data_index(data=message, indexes=idx_train), get_data_index(data=message,
@@ -75,3 +74,6 @@ if __name__ == '__main__':
 
     directory = './blue_scores/' + datetime + '/epoch_' + str(num_epoch) + '.txt'
     write_file(path_file=directory, data=blue_scores)
+
+    # directory = './blue_scores_ver1/' + datetime + '/epoch_' + str(num_epoch) + '.txt'
+    # write_file(path_file=directory, data=blue_scores)

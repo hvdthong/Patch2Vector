@@ -114,7 +114,7 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK, datetime, num_epo
         chencherry = SmoothingFunction()
         blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
                                    smoothing_function=chencherry.method1)
-        print(i, blue_score)
+        print('Epoch:%i, index:%i, blue_score:%f ' % (num_epoch, i, blue_score))
         blue_scores.append(blue_score)
     print('Datetime: ' + datetime + ' Epoch: ' + str(num_epoch) + ' Mean of blue scores: ' + str(
         statistics.mean(blue_scores)))
