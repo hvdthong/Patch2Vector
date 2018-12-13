@@ -14,11 +14,12 @@ def list_regular_expression(line):
 
 def matching_regular_expression(data):
     new_data = list()
-    for d in data:
+    for i in range(len(data)):
+        d = data[i]
         match_1, match_2, match_3, match_4, match_5, match_6 = list_regular_expression(line=d.lower().strip())
         if (match_1 is False) and (match_2 is False) and (match_3 is False) and (match_4 is False) and (
                 match_5 is False) and (match_6 is False):
-            new_data.append(d)
+            new_data.append(i)
     return new_data
 
 

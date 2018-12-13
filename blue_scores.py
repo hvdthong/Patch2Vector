@@ -51,4 +51,4 @@ if __name__ == '__main__':
     # blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
 
     datetime, start_epoch, end_epoch = '2018-12-12_01-04-31', 1, 50
-    blue_scores_embedding(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
+    blue_scores_embedding(datetime=datetime, start_epoch=1, end_epoch=1)
