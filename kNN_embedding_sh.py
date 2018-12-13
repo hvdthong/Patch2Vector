@@ -57,7 +57,14 @@ if __name__ == '__main__':
     # num_filters = 64
     # start_epoch, end_epoch = 1, 50
 
-    datetime = '2018-12-06_04-42-49'
+    # datetime = '2018-12-06_04-42-49'
+    # embedding_dim = 64
+    # filter_sizes = '1,2,3'
+    # hidden_units = 256
+    # num_filters = 64
+    # start_epoch, end_epoch = 1, 50
+
+    datetime = '2018-12-12_01-04-31'
     embedding_dim = 64
     filter_sizes = '1,2,3'
     hidden_units = 256
