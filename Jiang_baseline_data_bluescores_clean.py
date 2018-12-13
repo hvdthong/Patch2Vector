@@ -20,4 +20,4 @@ if __name__ == '__main__':
     print('Testing data size: %i' % len(data_test_msg))
 
     datetime, start_epoch, end_epoch = '2018-12-12_01-04-31', 1, 50
-    bluescore_clean(indexes=data_test_msg, datetime=datetime, start_epoch=1, end_epoch=1)
+    bluescore_clean(indexes=data_test_msg, datetime=datetime, start_epoch=1, end_epoch=50)
