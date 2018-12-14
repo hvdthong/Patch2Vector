@@ -126,15 +126,21 @@ def load_kNN_model(org_diff_code, tf_diff_code, ref_msg, topK, datetime, num_epo
         topK_index = finding_topK(cosine_sim=cosine_sim, topK=topK)
         bestK = finding_bestK(diff_trains=org_diff_train, diff_test=org_diff_test[i], topK_index=topK_index)
         train_msg, test_msg = ref_train[bestK].lower(), ref_test[i].lower()
+
+        chencherry = SmoothingFunction()
+        blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
+                                   smoothing_function=chencherry.method5)
+
         # train_msg, test_msg = remove_stopword_punctuation(line=train_msg), remove_stopword_punctuation(line=test_msg)
-        if (len(train_msg.split()) >= 4) and (len(test_msg.split()) >= 4):
-            # blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split())
-            chencherry = SmoothingFunction()
-            blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
-                                       smoothing_function=chencherry.method5)
-        else:
-            blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
-                                       weights=[0.25])
+        # if (len(train_msg.split()) >= 4) and (len(test_msg.split()) >= 4):
+        #     # blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split())
+        #     chencherry = SmoothingFunction()
+        #     blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
+        #                                smoothing_function=chencherry.method5)
+        # else:
+        #     blue_score = sentence_bleu(references=[train_msg.split()], hypothesis=test_msg.split(),
+        #                                weights=[0.25])
+
         print('Epoch:%i, index:%i, blue_score:%f ' % (num_epoch, i, blue_score))
         blue_scores.append(blue_score)
     print('Datetime: ' + datetime + ' Epoch: ' + str(num_epoch) + ' Mean of blue scores: ' + str(

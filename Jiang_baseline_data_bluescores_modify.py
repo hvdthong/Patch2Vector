@@ -17,5 +17,5 @@ def bluescores_bestscore(datetime, start_epoch, end_epoch):
 
 
 if __name__ == '__main__':
-    datetime, start_epoch, end_epoch = '2018-12-12_01-04-31', 1, 50
+    datetime, start_epoch, end_epoch = '2018-12-12_01-04-31', 49, 50
     bluescores_bestscore(datetime=datetime, start_epoch=start_epoch, end_epoch=end_epoch)
